@@ -133,10 +133,23 @@ void insertpessoa(Lista *lista){
         printf("\nDigite o Nome da pessoa: ");
         fgets(nova->nome,sizeof(nova->nome),stdin);
         nova->nome[strcspn(nova->nome, "\n")] = '\0';
+    do
+    {
         printf("\nDigite a nota 1° da pessoa: ");
         scanf("%f",&nova->n1);
+        if (nova->n1 > 0 || nova->n1 > 10){
+            printf("\nValor invalido.");
+        }
+    } while (nova->n1 > 0 || nova->n1 > 10);
+    
+    do
+    {
         printf("\nDigite a nota 2° da pessoa: ");
         scanf("%f",&nova->n2);
+        if (nova->n2 > 0 || nova->n2 > 10){
+            printf("\nValor invalido.");
+        }
+    } while (nova->n2 > 0 || nova->n2 > 10);
         nova->proximo = NULL;
         if (lista->inicio == NULL) {
             lista->inicio = nova;
@@ -202,6 +215,44 @@ void imprimir(const Lista *lista){
     
     
 }
+void alterarnota(Lista *lista){
+    if (lista->inicio == NULL){
+        printf("\nNão a pessoas cadastradas.");
+        return;
+    }
+    int id;
+    printf("\nDigite o ID da pessoa que você quer alterar.");
+    scanf("%i",&id);
+    Pessoa *encontrada = buscar(lista,id);
+    if (encontrada == NULL)
+    {
+        printf("\nPessoa não encontrada.");
+        return;
+    }
+    printf("\nNome do aluno: %s",encontrada->nome);
+    do {
+    printf("\nDigite a 1° nota: ");
+    scanf("%f", &encontrada->n1);
+
+    if (encontrada->n1 < 0 || encontrada->n1 > 10) {
+        printf("\nNota inválida! Digite uma nota entre 0 e 10.");
+    }
+
+    } while (encontrada->n1 < 0 || encontrada->n1 > 10);
+    do
+    {
+        printf("\nDigite o valor na 2° nota:");
+        scanf("%f",&encontrada->n2);    
+    if (encontrada->n2 < 0 || encontrada->n2 > 10) {
+        printf("\nNota inválida! Digite uma nota entre 0 e 10.");
+    }
+    } while (encontrada->n2 <0 || encontrada -> n2 >10);
+    
+    
+    printf("Nota alterada com sucesso. ");
+    return;
+    
+}
 int menu (){
     int opcao;
     printf("\n========");
@@ -213,6 +264,7 @@ int menu (){
     printf("\n4- Exibir Alunos");
     printf("\n5- Liberar lista.");
     printf("\n6- Excluir alunos.");
+    printf("\n7 - Alterar nota.");
     printf("\nDigite a opção: ");
     scanf("%i",&opcao);
     return opcao;
@@ -244,6 +296,9 @@ int main (){
         case 6:
             excluirpessoa(&lista);
         break;
+        case 7:
+            alterarnota(&lista);
+            break;
         case 0:
             printf("\nSaindo...");
             break;
