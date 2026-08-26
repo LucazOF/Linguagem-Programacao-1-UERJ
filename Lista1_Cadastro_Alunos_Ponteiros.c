@@ -253,6 +253,19 @@ void alterarnota(Lista *lista){
     return;
     
 }
+void liberarEstacionamento(Lista *lista) {
+    Carro *atual = lista->inicio;
+    Carro *proximo; // Variável auxiliar para não perdermos a referência
+
+    while (atual != NULL) {
+        proximo = atual->proximo; // 1. Salva o endereço do próximo
+        free(atual);              // 2. Agora sim, apaga o atual com segurança
+        atual = proximo;          // 3. Pula para o próximo carro
+    }
+    
+    lista->inicio = NULL; // Zera a lista para garantir
+    printf("\nTodos os carros foram removidos e a memoria foi liberada.\n");
+}
 int menu (){
     int opcao;
     printf("\n========");

@@ -35,28 +35,47 @@ int len (const Lista *lista){
 
 void insertCarro(Lista *lista){
     char placa[8];
+    char escolha;
+    float hora = 0;
     printf("\n=================");
     printf("\nREGISTRAR ENTRADA");
     printf("\n=================");
-    Carro *nova = malloc(sizeof(Carro));        
-    if (nova == NULL){
-        printf("\nERRO NA ALOCAÇÃO DE MEMORIA");
-        return;
-    }
+    Carro *nova = NULL;
     while (1)
     {
         printf("\nDIGITE A PLACA DO CARRO.");
         fgets(placa,sizeof(placa),stdin);
         placa[strcspn(placa, "\n")] = '\0';
-        if (buscar(lista,placa)==NULL)
+        Carro *encontrado = buscar(lista,placa);
+        if (encontrado ==NULL)
         {
-            strcpy(nova->placa, placa);      
+            nova = malloc(sizeof(Carro));        
+            if (nova == NULL){
+                printf("\nERRO NA ALOCAÇÃO DE MEMORIA");
+                return;
+                }
+            strcpy(nova->placa, placa);
+            nova->proximo = NULL;     
             break;
         }else{
             printf("\n PLACA JÁ CADASTRADA");
+            printf("\n DESEJA ADICIONAR MAIS HORAS ? Y/N");
+            scanf(" %c", &escolha);
+             if (escolha == 's' || escolha == 'S') {
+                printf("\nDIGITE QUANTAS HORAS DESEJADA: ");
+                scanf("%f",&hora);
+                encontrado->hora = encontrado->hora+hora;
+                return;
+            } else if (escolha == 'n' || escolha == 'N') {
+            printf("VOLTANDO PRO MENU.\n");
             return;
+            }else {
+            printf("Opcao invalida.\n");
+            }
         }
     }
+    printf("\nDIGITE QUANTAS HORAS DESEJADA: ");
+    scanf("%f",&nova->hora);
     if (lista->inicio == NULL) {
         lista->inicio = nova;
     } else {
@@ -83,8 +102,10 @@ Carro *buscar(const Lista *lista, char placa[]){
    }
 void adicionartempo(Lista *lista){
     char placa[8];
-    if (lista == NULL){
+    float hora;
+    if (lista->inicio == NULL){
         printf("\n ERRO: NÃO HÁ CARROS NO SISTEMA.");
+        return;
     }
     printf("\n=========================");
     printf("\nAdicionar tempo iniciado.");
@@ -99,7 +120,8 @@ void adicionartempo(Lista *lista){
         return;
     }
     printf("\nQuantas Horas o Carro está");
-    scanf("%f",&encontrado->hora);
+    scanf("%f",&hora);
+    encontrado->hora = encontrado->hora + hora;
     printf("\nHoras adicionadas com sucesso.");
 }
 void RegistrarSaida(Lista *lista){
@@ -115,12 +137,6 @@ void RegistrarSaida(Lista *lista){
     printf("\nQUANTAS HORAS O CARRO ESTÁ NO ESTACIONAMENTO.");
     fgets(placa,sizeof(placa),stdin);
     placa[strcspn(placa, "\n")] = '\0';
-    Carro *encontrado = buscar(lista,placa);
-    if (encontrado == NULL)
-    {
-        printf("\nCARRO NÂO ENCONTRADO.");
-        return;
-    }
     Carro *atual = lista->inicio;
     Carro *anterior = NULL;
     while (atual !=NULL && strcmp(atual->placa,placa)!=0)
@@ -138,9 +154,21 @@ void RegistrarSaida(Lista *lista){
     }else{
         anterior ->proximo = atual->proximo;
     }
-    printf("\nVeículo: %s Tempo: %.2f horas Valor: R$ %.2f", encontrado->placa,encontrado->hora,encontrado->hora*8);
+    printf("\nVeículo: %s Tempo: %.2f horas Valor: R$ %.2f", atual->placa,atual->hora,atual->hora*8);
     free (atual);
     printf("\n Veiculo Excluido com sucesso.");
+}
+void liberarEstacionamento(Lista *lista) {
+    Carro *atual = lista->inicio;
+    Carro *proximo;
+
+    while (atual != NULL) {
+        proximo = atual->proximo; 
+        free(atual);              
+        atual = proximo;          
+    }
+    
+    lista->inicio = NULL;
 }
 void imprimir(const Lista *lista){
     if (lista->inicio == NULL)
@@ -196,6 +224,7 @@ int main(){
             imprimir(&lista);
             break;
         case 0:
+            liberarEstacionamento(&lista);
             printf("\nSaindo...");
         break;
         default:
