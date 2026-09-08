@@ -24,6 +24,7 @@ void status(Lista *lista);
 void filter_livro(const Lista *lista);
 void liberar(Lista *lista);
 void ExcluirLivro(Lista *lista);
+void filter_autor(const Lista *lista);
 //FUNCOES
 int len(const Lista *lista){
     int qntd=0;
@@ -59,10 +60,10 @@ void insert(Lista *lista){
             novo->codigo = id;
             break;
         }else{
-            printf("\nCODIGO %i JÁ CADASTRO REGISTRADO");
+            printf("\nCODIGO %i JÁ CADASTRO REGISTRADO",id);
             printf("\nDESEJA ATUALIZAR O STATUS ?");
-            printf("\n PLACA JÁ CADASTRADA");
-            printf("\n DESEJA ADICIONAR MAIS HORAS ? Y/N");
+            printf("\n LIVRO JÁ CADASTRADA");
+            printf("\n DESEJA ATUALIZAR O STATUS ? Y/N");
             scanf(" %c", &escolha);
              if (escolha == 's' || escolha == 'S') {
                 printf("\nDIGITE 1 PARA ATUALIZAR PRA EMPRETADO E 0 PARA DISPONIVEL");
@@ -92,11 +93,11 @@ void changer_status(Livro *encontrado,int status){
     if (status == 1)
     {
         encontrado->status = 1;
-        printf("\n STATUS ATUALIZADO PARA DISPONIVEL");
+        printf("\n STATUS ATUALIZADO PARA EMPRESTADO");
     }else if (status == 0)
     {
         encontrado->status=0;
-        printf("\n STATUS ATUALIZADO PARA EMPRESTADO");
+        printf("\n STATUS ATUALIZADO PARA DISPONIVEL");
     }else{
         printf("\nVALOR INVALIDO VOLTANDO AO MENU");
         return;
@@ -187,6 +188,38 @@ void filter_livro(const Lista *lista) {
         printf("\nNENHUM LIVRO ENCONTRADO COM ESSE STATUS.\n");
     }
 }
+void filter_autor(const Lista *lista) {
+    if (lista->inicio == NULL){
+        printf("\n ERRO: Não há livros cadastrados.");
+        return;
+    }
+    char nome[51];
+    int encontrado = 0;
+    printf("\nDIGITE O NOME DO AUTOR QUE VOCÊ QUER VER OS LIVROS");
+    getchar();
+    fgets(nome,sizeof(nome),stdin);
+    nome[strcspn(nome, "\n")] = '\0';
+    Livro *atual = lista->inicio;
+    while (atual != NULL)
+    {
+        if (strstr(atual->autor,nome)==0)
+        {
+        printf("\nID: %i TITULO: %s AUTOR %s",atual->codigo,atual->titulo,atual->autor);
+        if (atual->status ==1)
+        {
+            printf("\nSTATUS: EMPRESTADO");
+        }else if (atual->status == 0)
+        {
+            printf("\nSTATUS: DISPONIVEL");
+        }
+        encontrado++;
+        }
+       atual = atual->proximo; 
+    }
+    if (encontrado == 0) {
+        printf("\nNENHUM LIVRO ENCONTRADO COM ESSE AUTOR.\n");
+    }
+}
 void liberar(Lista *lista){
     Livro *atual = lista->inicio;
     Livro *proximo;
@@ -216,6 +249,11 @@ void ExcluirLivro(Lista *lista){
         anterior = atual;
         atual = atual->proximo;
     }
+    if (atual == NULL)
+    {
+    printf("\nLIVRO NAO ENCONTRADO.");
+    return;
+    }
     if(anterior == NULL){
         lista->inicio=atual->proximo;
     }else{
@@ -234,7 +272,8 @@ int menu(){
     printf("\n2- EXIBIR LIVRO");
     printf("\n3- ATUALIZAR LIVRO");
     printf("\n4- EXCLUIR LIVRO");
-    printf("\n5- FILTRAR LIVROS.");
+    printf("\n5- FILTRAR SITUACAO.");
+    printf("\n6- FILTRAR AUTOR");
     printf("\n0- SAIR");
     printf("\nDIGITE UMA OPCAO: ");
     scanf("%i",&opcao);
@@ -263,6 +302,9 @@ int main(){
             break;
         case 5:
             filter_livro(&lista);
+        break;
+        case 6:
+            filter_autor(&lista);
         break;
         case 0:
             printf("\nSaindo...");
