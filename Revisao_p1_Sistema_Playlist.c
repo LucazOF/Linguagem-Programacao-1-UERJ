@@ -41,7 +41,7 @@ void insert(Lista *lista){
         Musica *encontrada = search(lista,id);
         if (encontrada == NULL)
         {
-            Musica *nova = malloc(sizeof(*nova));
+            nova = malloc(sizeof(*nova));
             if (nova == NULL)
             {
                 printf("\n ERRO NA ALOCAÇÂO DE MEMORIA.");
