@@ -134,7 +134,7 @@ void RegistrarSaida(Lista *lista){
     printf("\n================");
     printf("\nREGISTRAR SAIDA.");
     printf("\n================");
-    printf("\nQUANTAS HORAS O CARRO ESTÁ NO ESTACIONAMENTO.");
+    printf("\nQUAL A PLACA:");
     fgets(placa,sizeof(placa),stdin);
     placa[strcspn(placa, "\n")] = '\0';
     Carro *atual = lista->inicio;
