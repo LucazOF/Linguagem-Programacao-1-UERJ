@@ -14,6 +14,7 @@ int menu(){
     printf("0 - Sair\n\n");
     printf("Opcao: ");
     scanf("%d",&opcao);
+    return opcao;
 }
 int main(){
     No *inicio = NULL;
@@ -26,7 +27,12 @@ int main(){
         case 1:
             cadastro(&inicio);
             break;
-        
+        case 2:
+            imprimir(&inicio);
+            break;
+        case 3:
+            BuscarTarefa(&inicio);
+            break;
         default:
             break;
         }

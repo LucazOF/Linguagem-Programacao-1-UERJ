@@ -8,4 +8,7 @@ typedef struct No{
     struct No *prox;
 }No;
 void cadastro(No **inicio);
+No *search(No *inicio, int id);
+void BuscarTarefa( No **inicio);
+void imprimir(No **inicio);
 #endif

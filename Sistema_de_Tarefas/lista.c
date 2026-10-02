@@ -37,17 +37,67 @@ void cadastro(No **inicio){
     novo->prox = *inicio;
     *inicio = novo;
     printf("\nTAREFA CADASTRADA NO SISTEMA");
+    return;
 }
-No *search(const No **inicio,const int id){
-    No *atual = *inicio;
+No *search(No *inicio, int id){
+    No *atual = inicio;
     while (atual != NULL)
     {
         if (atual->id == id)
         {
             return atual;
         }
-        
         atual = atual->prox;
     }
     return NULL;
+}
+void BuscarTarefa( No **inicio){
+    if (*inicio == NULL){
+        printf("\nNÃO HÁ TAREFAS CADASTRADAS.");
+        return;
+    }
+    int id;
+    No *encontrado = NULL;
+    do
+    {
+        printf("\nDIGITE O ID DA TAREFA: ");
+        scanf("%d",&id);
+        encontrado = search(*inicio,id);
+        if (encontrado == NULL)
+        {
+            printf("\nERRO| N HA NINGUEM COM ESSE ID.");
+        }
+    } while (encontrado == NULL);
+    printf("\nTAREFA ENCONTRADA!");
+    printf("\n---------------");
+    printf("\nID: %d | Descrição: %s | Status",encontrado->id,encontrado->descricao);
+    if (encontrado->concluido == 1)
+    {
+        printf("[X]");
+    }else if (encontrado->concluido == 0)
+    {
+        printf("[ ]");
+    }
+    printf("\n---------------");
+    return;
+}
+void imprimir(No **inicio){
+    if (*inicio == NULL){
+        printf("\nNÃO HÁ TAREFAS CADASTRADAS.");
+        return;
+    }
+    No *atual = *inicio;
+    while (atual != NULL)
+    {
+    printf("\nID: %d | Descrição: %s | Status",atual->id,atual->descricao);
+        if (atual->concluido == 1)
+        {
+            printf("[X]");
+        }else if (atual->concluido == 0)
+        {
+            printf("[ ]");
+        }
+        atual = atual->prox;
+    }
+    
 }
