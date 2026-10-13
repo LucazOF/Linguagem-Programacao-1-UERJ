@@ -41,7 +41,7 @@ No *search(No *inicio, int id){
     return NULL;
 }
 void Buscar_livro(No **inicio){
-    if(inicio == NULL){
+    if(*inicio == NULL){
         printf("\nERRO | Não há livros cadastrados.\n");
         return;
     }
@@ -89,7 +89,7 @@ void Buscar_livro(No **inicio){
         printf("\nALTERACAO FEITA COM SUCESSO.");
         return;
     }else{
-        printf("\nERRO | O LIVRO ESTA APTO A ESSA MUDANÇA\n");
+        printf("\nERRO | O LIVRO NÃO ESTA APTO A ESSA MUDANÇA\n");
         return;
     }
 }
@@ -127,6 +127,9 @@ int processar_evento(No *encontrado,EventoLivro evento){
                 }else{
                     return 0;
                 }
+            break;
+        default:
+                return 0;
             break;
     }
 }

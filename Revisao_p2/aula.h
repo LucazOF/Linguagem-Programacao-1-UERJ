@@ -26,7 +26,6 @@ typedef struct No{
 
 void inserir_lista(No **inicio);
 int processar_evento(No *encontrado,EventoLivro evento);
-void liberar(No **inicio);
 void imprimir(const No *inicio);
 void Buscar_livro(No **inicio);
 No *search(No *inicio, int id);
