@@ -33,6 +33,16 @@ int main(){
         case 3:
             BuscarTarefa(&inicio);
             break;
+        case 4:
+            concluirtask(&inicio);
+            break;
+        case 5:
+            Excluir(&inicio);
+            break;
+        case 0:
+            printf("\nSaindo...");
+            liberar(&inicio);
+            break;
         default:
             break;
         }

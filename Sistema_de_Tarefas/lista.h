@@ -11,4 +11,8 @@ void cadastro(No **inicio);
 No *search(No *inicio, int id);
 void BuscarTarefa( No **inicio);
 void imprimir(No **inicio);
+void liberar(No **inicio);
+void Excluir(No **inicio);
+void concluirtask(No **inicio);
+void cadastronofinal(No **inicio);
 #endif
