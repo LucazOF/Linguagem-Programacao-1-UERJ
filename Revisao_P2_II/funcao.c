@@ -92,6 +92,9 @@ void atualizarstatus(No **inicio){
     }
 }
 int processar_evento(No *encontrado,Evento evento){
+    if(encontrado == NULL){
+        return 0;
+}  
 switch(evento){
         case INICIAR:
             if(encontrado->status == ABERTO){
@@ -154,7 +157,7 @@ void buscarchamado(No *inicio){
     printf("\nN°:%d |Decrição %s",encontrado->numero,encontrado->desc);
         switch(encontrado->status){
             case ABERTO:
-                printf("| STATUS: DISPONIVEL\n");
+                printf("| STATUS: ABERTO\n");
             break;
             case EM_ATENDIMENTO:
                 printf("| STATUS: EM ATENDIMENTO\n");
@@ -177,7 +180,7 @@ void imprimir(const No *inicio){
     printf("\nN°:%d |Decrição %s",atual->numero,atual->desc);
         switch(atual->status){
             case ABERTO:
-                printf("| STATUS: DISPONIVEL\n");
+                printf("| STATUS: ABERTO\n");
             break;
             case EM_ATENDIMENTO:
                 printf("| STATUS: EM ATENDIMENTO\n");
