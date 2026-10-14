@@ -147,24 +147,62 @@ void liberar(No **inicio){
 
 void imprimir(const No *inicio){
     if(inicio == NULL){
-        printf("\nERRO | Não a livros cadastrados.");
+        printf("\nERRO | Não a chamados cadastrados no sistema.");
         return;
     }
     const No *atual = inicio;
+    printf("\n======================");
+    printf("\nLISTA CHAMADOS");
+    printf("\n======================");
     while(atual != NULL){
-        printf("\nID:%d |Titulo %s",atual->id,atual->titulo);
-        switch(atual->estado){
-            case DISPONIVEL:
+        printf("\nN°:%d |Decrição %s",atual->id,atual->titulo);
+        switch(atual->STATUS){
+            case ABERTO:
                 printf("| STATUS: DISPONIVEL\n");
             break;
-            case RESERVADO:
-                printf("| STATUS: RESERVADO\n");
+            case EM_ATENDIMENTO:
+                printf("| STATUS: EM ATENDIMENTO\n");
             break;
-            case EMPRESTADO:
-                printf("| STATUS: EMPRESTADO\n");
+            case CANCELADO:
+                printf("| STATUS: CANCELADO\n");
+            break;
+            case RESOLVIDO:
+                printf("| STATUS: RESOLVIDO\n");
             break;
         }
         atual = atual ->proximo;
     }
     
+}
+void buscarchamado(const No *incio){
+    if(inicio == NULL){
+        printf("\nERRO | Não a chamados cadastrados no sistema.");
+        return;
+    }
+    printf("\n======================");
+    printf("\nBUSCAR CHAMADO");
+    printf("\n======================");
+    No *encontrado = NULL;
+    do{
+        printf("\nDigite o ID do livro que você deseja alterar o status: ");
+        scanf("%d",&id);
+        encontrado = search(*inicio,id);
+        if(encontrado == NULL){
+            printf("\nERRO | Livro não encontrado tente novamente.");
+        }
+    }while(encontrado == NULL);
+    printf("\nN°:%d |Decrição %s",encontrado->id,encontrado->titulo);
+        switch(encontrado->status){
+            case ABERTO:
+                printf("| STATUS: DISPONIVEL\n");
+            break;
+            case EM_ATENDIMENTO:
+                printf("| STATUS: EM ATENDIMENTO\n");
+            break;
+            case CANCELADO:
+                printf("| STATUS: CANCELADO\n");
+            break;
+            case RESOLVIDO:
+                printf("| STATUS: RESOLVIDO\n");
+            break;
 }
